@@ -1,309 +1,454 @@
 <!DOCTYPE html>
-<html lang='it'>
+<html lang="it">
 <head>
-    <meta charset='UTF-8'>
-    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Emil Benvenuto</title>
-    <link rel="icon" type="image/png" href="logo.png">
-
-    <!-- Librerie esterne -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <link href="https://unpkg.com/@fontsource-variable/inter@5.0.3/wght.css" rel="stylesheet">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --discord-blue: #5865F2;
-            --apple-gray: #1d1d1f;
-            --apple-light: #f5f5f7;
-            --youtube-red: #ff0000;
-            --github-black: #24292f;
-            --minecraft-green: #5555FF;
-            --roblox-blue: #00a2ff;
-            --spotify-green: #1DB954;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            margin: 0;
-            font-family: 'Inter Variable', sans-serif;
-            background: var(--apple-light);
-            color: var(--apple-gray);
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+            overflow-x: hidden;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow-x: hidden;
+            background: #0a0a0a;
+            position: relative;
         }
 
+        /* Subtle gradient overlay - ridotto */
         body::before {
             content: '';
             position: fixed;
-            top: -50%;
-            left: -50%;
-            right: -50%;
-            bottom: -50%;
-            z-index: -1;
-            background: linear-gradient(
-                45deg,
-                rgba(245, 245, 247, 0.1) 0%,
-                rgba(245, 245, 247, 0.15) 50%,
-                rgba(245, 245, 247, 0.1) 100%
-            );
-            animation: bgMotion 20s linear infinite;
-        }
-
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: -1;
-            background: url('resources/logo.png') center/contain no-repeat;
-            opacity: 0.15;
-            mix-blend-mode: overlay;
-        }
-
-        @keyframes bgMotion {
-            0% { transform: translate(0, 0); }
-            50% { transform: translate(50%, 50%); }
-            100% { transform: translate(0, 0); }
-        }
-
-        .container {
-            text-align: center;
-            padding: 2rem;
-            max-width: 600px;
-            width: 90%;
-            opacity: 0;
-            transform: translateY(50px);
-        }
-
-        h1 {
-            font-size: clamp(2rem, 8vw, 3.5rem);
-            font-weight: 700;
-            margin-bottom: 3rem;
-            letter-spacing: -0.03em;
-            line-height: 1.1;
-        }
-
-        .links-container {
-            display: grid;
-            gap: 1.2rem;
-        }
-
-        .social-link {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-            text-decoration: none;
-            font-size: 1.1rem;
-            padding: 1.2rem 2rem;
-            border-radius: 18px;
-            border: 1px solid rgba(0,0,0,0.08);
-            background: rgba(255,255,255,0.95);
-            backdrop-filter: blur(10px);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            transform: scale(0.98);
-            opacity: 0;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-            cursor: pointer;
-        }
-
-        .social-link:hover {
-            transform: scale(1.02) translateY(-3px);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
-        }
-
-        .social-link img {
-            width: 24px;
-            height: 24px;
-            transition: transform 0.3s ease;
-        }
-
-        .social-link:hover img {
-            transform: rotate(15deg) scale(1.1);
-        }
-
-        .youtube-link { color: var(--youtube-red); }
-        .github-link { color: var(--github-black); }
-        .minecraft-link { color: var(--minecraft-green); }
-        .roblox-link { color: var(--roblox-blue); }
-        .spotify-link { color: var(--spotify-green); }
-        .discord-username { color: var(--discord-blue); }
-
-        .copy-feedback {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            position: absolute;
-            bottom: -35px;
-            left: 50%;
-            transform: translateX(-50%);
-            opacity: 0;
+            inset: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.018) 0%, transparent 50%);
             pointer-events: none;
         }
 
-        .minecraft-ip .copy-feedback {
-            background: rgba(90, 179, 75, 0.15);
+        /* Container principale Material Dark */
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 480px;
+            width: 90%;
+            padding: 50px 40px;
+            background: #1a1a1a;
+            border-radius: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(255, 255, 255, 0.05),
+                inset 0 1px 0 rgba(255, 255, 255, 0.06);
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow: hidden;
         }
 
-        .minecraft-ip .copy-feedback::before {
-            content: '✓';
-            font-weight: 700;
-            color: var(--minecraft-green);
+        /* Shimmer effect on container - ridotto del 40% */
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0.048) 50%,
+                transparent 100%
+            );
+            animation: shimmer 3s ease-in-out infinite;
+            pointer-events: none;
         }
 
-        .discord-username .copy-feedback {
-            background: rgba(88, 101, 242, 0.15);
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 200%; }
         }
 
-        .discord-username .copy-feedback::before {
-            content: '✓';
-            font-weight: 700;
-            color: var(--discord-blue);
-        }
-
-        @media (max-width: 768px) {
-            .social-link {
-                padding: 1rem 1.5rem;
-                font-size: 1rem;
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
             }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Avatar Material con white glow - ridotto */
+        .avatar {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 30px;
+            position: relative;
+            animation: scaleIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s backwards;
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* White glow effect - ridotto del 40% */
+        .avatar::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.06));
+            filter: blur(5px);
+            opacity: 0.36;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 0.24;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.48;
+                transform: scale(1.05);
+            }
+        }
+
+        .avatar-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            font-weight: 600;
+            color: #ffffff;
+            box-shadow: 
+                0 8px 24px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.12);
+        }
+
+        /* Typography */
+        h1 {
+            text-align: center;
+            color: #ffffff;
+            font-size: 2em;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+            animation: slideDown 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.3s backwards;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tagline {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.95em;
+            margin-bottom: 40px;
+            font-weight: 400;
+            letter-spacing: 0.3px;
+            animation: slideDown 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.4s backwards;
+        }
+
+        /* Social grid Material */
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-top: 30px;
+        }
+
+        .social-link {
+            position: relative;
+            padding: 24px 20px;
+            background: #242424;
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            text-decoration: none;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            box-shadow: 
+                0 4px 12px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.03);
+            animation: cardIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+        }
+
+        .social-link:nth-child(1) { animation-delay: 0.5s; }
+        .social-link:nth-child(2) { animation-delay: 0.6s; }
+        .social-link:nth-child(3) { animation-delay: 0.7s; }
+        .social-link:nth-child(4) { animation-delay: 0.8s; }
+
+        @keyframes cardIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* White shimmer on cards - ridotto del 40% */
+        .social-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0.09) 50%,
+                transparent 100%
+            );
+            transition: left 0.6s ease;
+        }
+
+        .social-link:hover::before {
+            left: 100%;
+        }
+
+        /* White glow on hover - ridotto del 40% */
+        .social-link::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 18px;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .social-link:hover::after {
+            opacity: 1;
+        }
+
+        .social-link:hover {
+            transform: translateY(-4px);
+            background: #2a2a2a;
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 
+                0 12px 32px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(255, 255, 255, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.09);
+        }
+
+        .social-link:active {
+            transform: translateY(-2px) scale(0.98);
+        }
+
+        .social-icon {
+            font-size: 1.8em;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Drop shadow ridotto del 40% */
+        .social-link:hover .social-icon {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 7px rgba(255, 255, 255, 0.24));
+        }
+
+        .social-name {
+            font-size: 0.9em;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            color: rgba(255, 255, 255, 0.9);
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .social-link:hover .social-name {
+            color: #ffffff;
+        }
+
+        /* Colori specifici accent (Material style) */
+        .social-link[data-social="github"]:hover .social-icon {
+            color: #ffffff;
+        }
+
+        .social-link[data-social="instagram"]:hover .social-icon {
+            color: #E4405F;
+        }
+
+        .social-link[data-social="spotify"]:hover .social-icon {
+            color: #1DB954;
+        }
+
+        .social-link[data-social="email"]:hover .social-icon {
+            color: #ffffff;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .container {
+                padding: 40px 30px;
+            }
+
+            h1 {
+                font-size: 1.75em;
+            }
+
+            .tagline {
+                font-size: 0.9em;
+            }
+
+            .social-grid {
+                gap: 12px;
+            }
+
+            .social-link {
+                padding: 20px 16px;
+            }
+        }
+
+        /* Footer minimalista */
+        .footer {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 0.85em;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            text-align: center;
+            z-index: 10;
+            animation: fadeIn 0.8s ease 1.2s backwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Ambient light effect - ridotto del 40% */
+        .ambient-light {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.018) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 1;
+            transition: transform 0.3s ease;
         }
     </style>
 </head>
 <body>
-    <div class='container'>
+    <!-- Ambient light effect -->
+    <div class="ambient-light" id="ambientLight"></div>
+
+    <!-- Container principale -->
+    <div class="container">
+        <div class="avatar">
+            <div class="avatar-img">
+                EB
+            </div>
+        </div>
+
         <h1>Emil Benvenuto</h1>
-        <div class='links-container'>
-            <a href='https://www.instagram.com/emil.benvenuto/' class='social-link' target='_blank' rel='noopener noreferrer'>
-                <img src="https://www.svgrepo.com/show/475658/instagram-color.svg" alt="Instagram">
-                Instagram
+        <p class="tagline">Developer • Student • Tech Enthusiast</p>
+
+        <!-- Grid social media -->
+        <div class="social-grid">
+            <a href="https://github.com/emilbenvenuto" class="social-link" data-social="github" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-github social-icon"></i>
+                <span class="social-name">GitHub</span>
             </a>
 
-            <div class='social-link discord-username' onclick='copyDiscord(this)'>
-                <img src="https://www.svgrepo.com/show/353655/discord-icon.svg" alt="Discord">
-                <span>Discord</span>
-                <span class='copy-feedback'>Username copied!</span>
-            </div>
-            
-            <a href='https://www.youtube.com/@emilbenvenuto' class='social-link youtube-link' target='_blank' rel='noopener noreferrer'>
-                <img src="https://www.svgrepo.com/show/354592/youtube-icon.svg" alt="YouTube">
-                YouTube
+            <a href="https://www.instagram.com/emil.benvenuto/" class="social-link" data-social="instagram" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-instagram social-icon"></i>
+                <span class="social-name">Instagram</span>
             </a>
 
-            <a href='https://github.com/emilbenvenuto' class='social-link github-link' target='_blank' rel='noopener noreferrer'>
-                <img src="https://www.svgrepo.com/show/512317/github-142.svg" alt="GitHub">
-                GitHub
+            <a href="https://open.spotify.com/user/312d2x5nrdtsprr44g7qav2wylfu?si=Z5yyUerrRs2Wse0AgyNY-w" class="social-link" data-social="spotify" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-spotify social-icon"></i>
+                <span class="social-name">Spotify</span>
             </a>
 
-            <a href='https://www.roblox.com/it/users/1248246101/profile' class='social-link roblox-link' target='_blank' rel='noopener noreferrer'>
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Roblox_player_icon_black.svg/534px-Roblox_player_icon_black.svg.png" alt="Roblox">
-                Roblox
+            <a href="mailto:benvenutoemil@icloud.com" class="social-link" data-social="email">
+                <i class="fas fa-envelope social-icon"></i>
+                <span class="social-name">Email</span>
             </a>
-
-            <a href='https://open.spotify.com/user/312d2x5nrdtsprr44g7qav2wylfu?si=Z5yyUerrRs2Wse0AgyNY-w' class='social-link spotify-link' target='_blank' rel='noopener noreferrer'>
-                <img src="https://www.svgrepo.com/show/475684/spotify-color.svg" alt="Spotify">
-                Spotify
-            </a>
-
-            <div class='social-link minecraft-link minecraft-ip' onclick='copyIP(this)'>
-                <img src="minecraft.svg" alt="Minecraft">
-                <span>Minecraft Server</span>
-                <span class='copy-feedback'>IP copied!</span>
-            </div>
         </div>
     </div>
 
+    <div class="footer">
+        © 2025 Emil Benvenuto
+    </div>
+
     <script>
-        gsap.registerPlugin(ScrollTrigger);
+        // Ambient light follows mouse (Apple-style)
+        const ambientLight = document.getElementById('ambientLight');
 
-        // Animazione container principale
-        gsap.to(".container", {
-            duration: 1.2,
-            opacity: 1,
-            y: 0,
-            ease: "power4.out",
-            delay: 0.3
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX - 250;
+            const y = e.clientY - 250;
+            ambientLight.style.transform = `translate(${x}px, ${y}px)`;
         });
 
-        // Animazione links
-        gsap.to(".social-link", {
-            duration: 0.8,
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            stagger: 0.15,
-            ease: "elastic.out(1, 0.5)",
-            scrollTrigger: {
-                trigger: ".links-container",
-                start: "top 90%",
-                toggleActions: "play none none none"
-            }
+        // Subtle parallax on container
+        const container = document.querySelector('.container');
+
+        document.addEventListener('mousemove', (e) => {
+            const xAxis = (window.innerWidth / 2 - e.pageX) / 100;
+            const yAxis = (window.innerHeight / 2 - e.pageY) / 100;
+
+            container.style.transform = `perspective(1000px) rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
         });
 
-        // Effetto parallasse al mouse
+        // Haptic-like feedback on click
         document.querySelectorAll('.social-link').forEach(link => {
-            link.addEventListener('mousemove', (e) => {
-                const rect = link.getBoundingClientRect();
-                gsap.to(link, {
-                    duration: 0.5,
-                    x: (e.clientX - rect.left - rect.width/2) * 0.3,
-                    y: (e.clientY - rect.top - rect.height/2) * 0.3,
-                    ease: "power2.out"
-                });
+            link.addEventListener('mousedown', function() {
+                this.style.transform = 'translateY(-2px) scale(0.96)';
             });
-            
-            link.addEventListener('mouseleave', () => {
-                gsap.to(link, {
-                    duration: 0.8,
-                    x: 0,
-                    y: 0,
-                    ease: "elastic.out(1, 0.3)"
-                });
+
+            link.addEventListener('mouseup', function() {
+                this.style.transform = 'translateY(-4px) scale(1)';
             });
         });
-
-        // Funzioni copia
-        function copyIP(element) {
-            handleCopy(element, 'kennedy.tssonor.com');
-        }
-
-        function copyDiscord(element) {
-            handleCopy(element, 'emilbenvenuto');
-        }
-
-        function handleCopy(element, text) {
-            const feedback = element.querySelector('.copy-feedback');
-            const timeline = gsap.timeline();
-            
-            navigator.clipboard.writeText(text)
-                .then(() => {
-                    timeline.to(feedback, {
-                        duration: 0.3,
-                        opacity: 1,
-                        y: 0,
-                        scale: 1,
-                        ease: "power2.out"
-                    })
-                    .to(feedback, {
-                        duration: 0.2,
-                        scale: 1.1,
-                        ease: "power2.out"
-                    }, "+=0.1")
-                    .to(feedback, {
-                        duration: 0.4,
-                        opacity: 0,
-                        y: -10,
-                        ease: "power2.inOut"
-                    }, "+=0.5");
-                })
-                .catch(err => console.error('Errore nella copia:', err));
-        }
     </script>
 </body>
 </html>
